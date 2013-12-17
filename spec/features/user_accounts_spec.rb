@@ -6,9 +6,11 @@ describe "UserAccounts" do
     click_link "Register"
     fill_in "Email", :with => "tester@gmail.com"
     fill_in "Password", :with => "my-password"
-    click_button "Register"
+    fill_in "Password confirmation", :with => "my-password"
 
-    page.should have_content("Email confirmation sent to tester@gmail.com")
+    click_button "Sign up"
+
+    page.should have_content("A message with a confirmation link has been sent to your email address")
   end
 
 end
