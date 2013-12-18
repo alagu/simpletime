@@ -34,3 +34,17 @@ RSpec.configure do |config|
   #     --seed 1234
   config.order = "random"
 end
+
+def login
+  visit "/"
+  click_link "Sign in"
+
+  user = FactoryGirl.create(:user)
+
+  fill_in "Email", :with => user.email
+  fill_in "Password", :with => user.password
+
+  click_button "Sign in"
+
+  user
+end

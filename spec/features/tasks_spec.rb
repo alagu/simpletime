@@ -2,15 +2,7 @@ require 'spec_helper'
 
 describe "Tasks" do
   it "allows user to add a new task what he worked on" do
-    visit "/"
-    click_link "Sign in"
-
-    user = FactoryGirl.create(:user)
-
-    fill_in "Email", :with => user.email
-    fill_in "Password", :with => user.password
-
-    click_button "Sign in"
+    login
 
     page.should have_content("Record what you worked on")
 
@@ -21,5 +13,16 @@ describe "Tasks" do
     click_button "Record"
 
     page.should have_content("Built the user login feature")
+  end
+
+  it "allows user to set preferred working hours per day" do
+    user = login
+
+    visit "/users/edit"
+    fill_in "Preferred hours per day", :with => "4"
+    fill_in "Current password", :with => user.password
+
+    find_field("Preferred hours per day").value.should eq "4"
+
   end
 end
