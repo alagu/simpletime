@@ -70,6 +70,27 @@
   .task-log-lists {
     margin-top: 20px;
     
+    .date-box {
+      &.incomplete {
+        background-color: #f2dede;
+        border-color: #A27777;
+        
+        table, td, th, tr, thead, tbody {
+          border-color: #A27777;    
+        }
+      }
+
+      &.completed {
+        background-color: #dff0d8;
+        border-color: #43B44C;
+        
+        table, td, th, tr, thead, tbody {
+          border-color: #43B44C;    
+        }
+      }
+
+    }
+    
     table {
 
       .log-hours, .log-actions {

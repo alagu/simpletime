@@ -20,7 +20,7 @@
           </div>
         <% end %>
         <% current_date = task.date %>
-        <div class="rounded-box">
+        <div class="rounded-box date-box <%= @hours_progress[task.date.to_s] %>">
             <h3><%= task.date.strftime("%e %B '%y, %A") %></h3>
             <table class="table table-bordered">
               <thead>

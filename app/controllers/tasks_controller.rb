@@ -7,6 +7,26 @@ class TasksController < ApplicationController
   def index
     @tasks = Task.order("date DESC, id ASC").all
 
+    hours_hash = {}
+
+    @tasks.each do |task|
+      if hours_hash.has_key? task.date.to_s
+        hours_hash[task.date.to_s] = hours_hash[task.date.to_s] + task.hours
+      else
+        hours_hash[task.date.to_s] = task.hours
+      end
+    end
+
+    @hours_progress = {}
+
+    hours_hash.each do |date, hours|
+      if hours < current_user.pref_hours
+        @hours_progress[date] = 'incomplete'
+      else
+        @hours_progress[date] = 'completed'
+      end
+    end
+
     @newtask = Task.new
 
     respond_to do |format|

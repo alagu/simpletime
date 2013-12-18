@@ -19,6 +19,10 @@ describe "UserAccounts" do
     page.should have_content("Your account was successfully confirmed. You are now signed in")
   end
 
+  it "doesn't allow user to create a duplicate account" do
+    pending "add here"
+  end
+
   it "allows user to login into the app" do
     visit "/"
     click_link "Sign in"
@@ -32,5 +36,26 @@ describe "UserAccounts" do
 
     page.should have_content("Signed in successfully")
   end
+
+  it "doesn't allow user to login with wrong password" do
+    pending "add here"
+  end
+
+
+
+  it "allows user to set preferred working hours per day" do
+    user = login
+
+    visit "/users/edit"
+    fill_in "Preferred hours per day", :with => "4"
+    fill_in "Current password", :with => user.password
+
+    find_field("Preferred hours per day").value.should eq "4"
+  end
+
+  it "doesn't allow user to edit another user's preferred working hours" do
+    pending "add here"
+  end
+
 
 end
