@@ -1,0 +1,88 @@
+// Place all the styles related to the Tasks controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+.rounded-box {
+  position: relative;
+  margin: 15px 0;
+  padding: 19px 19px 14px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+}
+
+.tasks {
+ 
+  .new-task-log {
+    border: 2px solid #666;
+    
+    h2 {
+      margin-bottom: 15px;
+    }
+    
+    .new-task-form {
+       
+      .what, .when, .how-many-hrs, .task-save {
+        display: inline-block;
+      }
+
+      input, button {
+        font-size: 20px;
+        padding: 10px;
+      }
+
+      .what {
+        width: 40%;
+
+        input {
+          width: 94%;
+        }
+      }
+
+      .when {
+        width: 20%;
+
+        input {
+          width: 80%;
+        }
+
+      }
+
+      .how-many-hrs {
+        width: 17%;
+        
+        input {
+          width : 70%;
+        }
+      }
+
+      .task-save input {
+        margin-top: -3px;
+        padding: 10px 20px;
+      }
+
+    }
+  }
+
+  .task-log-lists {
+    margin-top: 20px;
+    
+    table {
+
+      .log-hours, .log-actions {
+        text-align: center;
+      }
+      
+      .log-hours {
+        width: 5%;
+      }
+
+      .log-actions {
+        width: 12%;
+      }
+    }
+  }  
+}

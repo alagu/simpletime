@@ -1,0 +1,35 @@
+
+    <h2> Record what you worked on:</h2>
+
+    <%= form_for @newtask, :html => { :class => 'form-horizontal' } do |f| %>
+
+      <div class="new-task-form">
+        <div class="new-task-row">
+          <div class="what">
+            <label for="task-what">What did you work on?</label>
+          </div>
+          <div class="when">
+            <label for="task-when">When did you work?</label>
+          </div>
+          <div class="how-many-hrs">
+            <label for="task-how-many-hrs">How many hours?</label>
+          </div>
+        </div>
+        <div class="new-task-row">
+          <div class="what">
+            <%= f.text_field :desc, :id => "task-what", :placeholder => "Built a new feature" %>
+          </div>
+          <div class="when">
+            <%= f.text_field :date, :id => "task-when" %>
+          </div>
+          <div class="how-many-hrs">
+            <%= f.text_field :hours, :id => "task-how-many-hrs", :placeholder => "1.5" %>
+          </div>
+          <div class="task-save">
+            <input type="hidden" name="source" value="dashboard">
+            <%= f.submit "Record", :class => "btn btn-primary" %>
+          </div>
+        </div>
+      </div>
+
+    <% end %>

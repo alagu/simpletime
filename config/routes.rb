@@ -1,8 +1,9 @@
 TimeManager::Application.routes.draw do
 
-  get "home/index"
-
+  resources :tasks
   devise_for :users
+
+  match "dashboard" => "tasks#index", :as => 'user_root'
 
   root :to => "home#index"
 end
