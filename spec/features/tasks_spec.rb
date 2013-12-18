@@ -5,12 +5,7 @@ describe "Tasks" do
     login
 
     page.should have_content("Record what you worked on")
-
-    fill_in "What did you work on?", :with => "Built the user login feature"
-    fill_in "When did you work?", :with => "18-12-2013"
-    fill_in "How many hours?", :with => "2.5"
-
-    click_button "Record"
+    create_task "Built the user login feature", "2.5", "18-12-2013"
 
     page.should have_content("Built the user login feature")
   end
@@ -32,13 +27,9 @@ describe "Tasks" do
   end
 
   it "shows incomplete task if user has worked less than preferred working hours" do
-    user = login
+    login
 
-    fill_in "What did you work on?", :with => "Built the user login feature"
-    fill_in "When did you work?", :with => "18-12-2013"
-    fill_in "How many hours?", :with => "2.5"
-
-    click_button "Record"
+    create_task "Built the user login feature", "2.5", "18-12-2013"
 
     page.should have_css('div.date-box.incomplete')
   end
@@ -46,13 +37,31 @@ describe "Tasks" do
   it "shows complete task if user has worked more than preferred working hours " do
     user = login
 
-    fill_in "What did you work on?", :with => "Built the user login feature"
-    fill_in "When did you work?", :with => "18-12-2013"
-    fill_in "How many hours?", :with => "8.5"
-
-    click_button "Record"
+    create_task "Built the user login feature", "8.5", "18-12-2013"
 
     page.should have_css('div.date-box.completed')
 
+  end
+
+  it "shows only rows in a specific date range" do
+    login
+
+    for date in 10..15 
+      date_string = "#{date}-12-2013"
+
+      for i in 1..3
+        create_task "Built the user login feature", "2.5", date_string
+      end
+    end
+
+    page.should have_content("14 December '13, Saturday") 
+
+    visit "/dashboard?from=12-12-2013&to=13-12-2013"
+
+    page.should have_content("12 December '13") 
+    page.should have_content("13 December '13")
+
+    page.should have_no_content("10 December '13")    
+    page.should have_no_content("14 December '13")
   end
 end

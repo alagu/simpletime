@@ -5,7 +5,22 @@ class TasksController < ApplicationController
   before_filter :authenticate_user!
 
   def index
-    @tasks = Task.order("date DESC, id ASC").all
+    tasks_query = Task
+
+    if params.has_key? :from
+      tasks_query = tasks_query.where("date >= ?", Date.parse(params[:from]))
+      @datemin = params[:from]
+    end
+
+    if params.has_key? :to
+      tasks_query = tasks_query.where("date <= ?", Date.parse(params[:to]))
+      @datemax = params[:to]
+    end
+
+    @tasks = tasks_query.order("date DESC, id ASC").all
+
+    @datemin ||= @tasks.last.date.to_s
+    @datemax ||= @tasks.first.date.to_s
 
     hours_hash = {}
 

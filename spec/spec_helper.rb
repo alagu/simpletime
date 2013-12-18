@@ -48,3 +48,12 @@ def login
 
   user
 end
+
+def create_task(desc, hours, date)
+  
+  fill_in "What did you work on?", :with => desc
+  fill_in "When did you work?", :with => date
+  fill_in "How many hours?", :with => hours
+
+  click_button "Record"
+end

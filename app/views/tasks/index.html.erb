@@ -11,6 +11,8 @@
 
   <div class="task-log-lists">
     <h2> Your Task Log </h2>
+    <%= render :partial => "tasks/daterangepicker", :datemin => @datemin, :datemax => @datemax %>
+
     <% current_date = nil %>
     <% @tasks.each_with_index do |task, index| %>
 
