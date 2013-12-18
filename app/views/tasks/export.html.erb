@@ -1,0 +1,40 @@
+<html>
+  <head>
+    <title>Work Log</title>
+    <%= stylesheet_link_tag "export", :media => "all" %>
+  </head>
+  <body class="export">
+    <header>SimpleTime</header>
+    <div class="main-content">
+
+      <h1> Work log for <%= current_user.email %></h1>
+
+      <% current_date = nil %>
+      <% @tasks.reverse.each_with_index do |task, index| %>
+        <% if current_date != task.date %>
+          <% if index > 0 %>   
+            </ul></td></tr></table></div>
+          <% end %>
+          <% current_date = task.date %>
+          <div class="date-block">
+            <table>
+            <tr>
+              <td> Date </td> <td> : <strong> <%= task.date.strftime("%e %B %Y, %A") %> </td>
+            </tr>
+            <tr>
+              <td> Hours worked </td> <td> : <strong> <%= @hours_hash[task.date.to_s] %> hours </td> 
+            </tr>
+            <tr> <td colspan="2"> Notes: <ul>
+        <% end %>
+        <li> <%= task.desc %>
+
+        <% if index == @tasks.length - 1  %>    
+          </ul></td></tr></table></div>
+        <% end %>
+      <% end %>
+    </div>
+    <footer>
+      <p>&copy; SimpleTime 2013</p>
+    </footer>
+  </body>
+</html>

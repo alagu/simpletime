@@ -24,19 +24,19 @@ class TasksController < ApplicationController
       @datemax ||= @tasks.first.date.to_s
     end
 
-    hours_hash = {}
+    @hours_hash = {}
 
     @tasks.each do |task|
-      if hours_hash.has_key? task.date.to_s
-        hours_hash[task.date.to_s] = hours_hash[task.date.to_s] + task.hours
+      if @hours_hash.has_key? task.date.to_s
+        @hours_hash[task.date.to_s] = @hours_hash[task.date.to_s] + task.hours
       else
-        hours_hash[task.date.to_s] = task.hours
+        @hours_hash[task.date.to_s] = task.hours
       end
     end
 
     @hours_progress = {}
 
-    hours_hash.each do |date, hours|
+    @hours_hash.each do |date, hours|
       if hours < current_user.pref_hours
         @hours_progress[date] = 'incomplete'
       else
@@ -47,7 +47,11 @@ class TasksController < ApplicationController
     @newtask = Task.new
 
     respond_to do |format|
-      format.html # index.html.erb
+      if params[:view] == "export"
+        format.html { render :layout => false, :template => "tasks/export" }
+      else
+        format.html # index.html.erb
+      end
       format.json { render json: @tasks }
     end
   end

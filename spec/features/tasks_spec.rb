@@ -64,4 +64,24 @@ describe "Tasks" do
     page.should have_no_content("10 December '13")    
     page.should have_no_content("14 December '13")
   end
+
+  it "allows to export tasks over a date range" do
+    user = login
+
+    for date in 10..15 
+      date_string = "#{date}-12-2013"
+
+      for i in 1..3
+        create_task "Built the user login feature", "2.5", date_string
+      end
+    end
+
+    click_link "Export"
+
+    page.should have_no_content("Dashboard")
+    page.should have_no_content("Record what you worked on")
+
+    page.should have_content("12 December 2013")
+    page.should have_content("13 December 2013")
+  end
 end

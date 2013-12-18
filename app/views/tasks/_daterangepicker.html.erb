@@ -2,3 +2,4 @@
     <i class="icon-calendar icon-large"></i>
     <span><%= @datemin %> - <%= @datemax %></span> <b class="caret"></b>
 </div>
+<a target="_blank" class="btn pull-right" id="export-tasks" href="/tasks?view=export&from=<%= @datemin %>&to=<%= @datemax %>">Export</a>

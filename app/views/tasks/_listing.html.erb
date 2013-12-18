@@ -2,7 +2,11 @@
 <% @tasks.each_with_index do |task, index| %>
 
   <% if current_date != task.date %>
-    <% if index > 0 %>    
+    <% if index > 0 %> 
+      <tr>
+        <td class="log-desc">Total hours worked</td>
+        <td class="log-hours" colspan="2"><strong><%= @hours_hash[task.date.to_s] %></strong></td>
+      </tr>   
       </table>
       </div>
     <% end %>
@@ -37,7 +41,11 @@
     </td>      
   </tr>
 
-  <% if index == @tasks.length - 1  %>    
+  <% if index == @tasks.length - 1  %>  
+    <tr>
+      <td class="log-desc">Total hours worked</td>
+      <td class="log-hours" colspan="2"><strong><%= @hours_hash[task.date.to_s] %></strong></td>
+    </tr>
     </table>
     </div>
   <% end %>
