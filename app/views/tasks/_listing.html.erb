@@ -5,7 +5,7 @@
     <% if index > 0 %> 
       <tr>
         <td class="log-desc">Total hours worked</td>
-        <td class="log-hours" colspan="2"><strong><%= @hours_hash[task.date.to_s] %></strong></td>
+        <td class="log-hours" colspan="2"><strong><%= @hours_hash[@tasks[index-1].date.to_s] %></strong></td>
       </tr>   
       </table>
       </div>

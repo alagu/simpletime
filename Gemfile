@@ -8,6 +8,7 @@ gem 'rails', '3.2.13'
 
 gem 'pg'
 gem 'devise'
+gem 'forgery'
 
 
 # Gems used only for assets and not required
@@ -30,7 +31,6 @@ group :development do
   gem 'sqlite3'
   gem 'quiet_assets'
 end
-
 
 gem "rspec-rails", :group => [:test, :development]
 
