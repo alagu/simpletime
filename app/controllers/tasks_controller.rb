@@ -19,8 +19,10 @@ class TasksController < ApplicationController
 
     @tasks = tasks_query.order("date DESC, id ASC").all
 
-    @datemin ||= @tasks.last.date.to_s
-    @datemax ||= @tasks.first.date.to_s
+    if @tasks.length > 0
+      @datemin ||= @tasks.last.date.to_s
+      @datemax ||= @tasks.first.date.to_s
+    end
 
     hours_hash = {}
 
