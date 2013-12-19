@@ -5,7 +5,7 @@ class TasksController < ApplicationController
   before_filter :authenticate_user!
 
   def index
-    tasks_query = Task
+    tasks_query = Task.where(:user_id => current_user)
 
     if params.has_key? :from
       tasks_query = tasks_query.where("date >= ?", Date.parse(params[:from]))
@@ -62,8 +62,13 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
 
     respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @task }
+      if @task.user != current_user
+        format.html { redirect_to "/dashboard", :alert => "You are not authorized to see a task which is not yours" }  
+        format.json { render json: {:message => "You are not authorized to see a task which is not yours"}}
+      else
+        format.html # show.html.erb
+        format.json { render json: @task }
+      end
     end
   end
 
@@ -81,6 +86,9 @@ class TasksController < ApplicationController
   # GET /tasks/1/edit
   def edit
     @task = Task.find(params[:id])
+    if @task.user != current_user
+      redirect_to "/dashboard", :alert => "You are not authorized to edit a task which is not yours"
+    end
   end
 
   # POST /tasks
@@ -91,13 +99,7 @@ class TasksController < ApplicationController
 
     respond_to do |format|
       if @task.save
-        if params[:source] == "dashboard"
-          redirect_path = "/dashboard"
-        else
-          redirect_path = @task
-        end
-
-        format.html { redirect_to redirect_path, notice: 'Task was successfully created.' }
+        format.html { redirect_to "/dashboard", notice: 'Task was successfully created.' }
         format.json { render json: @task, status: :created, location: @task }
       else
         format.html { render action: "new" }
@@ -112,8 +114,8 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
 
     respond_to do |format|
-      if @task.update_attributes(params[:task])
-        format.html { redirect_to @task, notice: 'Task was successfully updated.' }
+      if @task.update_attributes(params[:task]) and @task.user == current_user
+        format.html { redirect_to "/dashboard", notice: 'Task was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -126,7 +128,9 @@ class TasksController < ApplicationController
   # DELETE /tasks/1.json
   def destroy
     @task = Task.find(params[:id])
-    @task.destroy
+    if @task.user == current_user
+      @task.destroy
+    end
 
     respond_to do |format|
       format.html { redirect_to "/dashboard" }

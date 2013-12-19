@@ -35,18 +35,14 @@ RSpec.configure do |config|
   config.order = "random"
 end
 
-def login
+def login(user)
   visit "/"
   click_link "Sign in"
-
-  user = FactoryGirl.create(:user)
 
   fill_in "Email", :with => user.email
   fill_in "Password", :with => user.password
 
   click_button "Sign in"
-
-  user
 end
 
 def create_task(desc, hours, date)
@@ -56,4 +52,20 @@ def create_task(desc, hours, date)
   fill_in "How many hours?", :with => hours
 
   click_button "Record"
+end
+
+def register(email, pass)
+  visit "/"
+  click_link "Register"
+  fill_in "Email", :with => email
+  fill_in "Password", :with => pass
+  fill_in "Password confirmation", :with => pass
+
+  click_button "Sign up"
+end
+
+def confirm_register_email
+  last_email = ActionMailer::Base.deliveries.last
+  ctoken = last_email.body.match(/confirmation_token=\w*/)
+  visit "/users/confirmation?#{ctoken}"
 end
